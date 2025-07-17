@@ -28,10 +28,10 @@
     .banner {
       margin-top: 1rem;
       font-size: 1.5rem;
-      font-weight: bold;             /* 👈 makes text bold */
+      font-weight: bold;
       font-style: italic;
-      color: #333;
-      background-color: yellow;      /* 👈 sets background to yellow */
+      color: #fff;
+      background-color: #f97812;
       padding: 0.5rem 1rem;
       display: inline-block;
       border-radius: 8px;
@@ -43,6 +43,12 @@
       height: auto;
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .vibe-photo:hover {
+      transform: scale(1.03);
     }
   </style>
 </head>
@@ -54,7 +60,9 @@
   </header>
 
   <main>
-    <img src="Full_Spread.jpg" alt="Vibraphone" class="vibe-photo" />
+    <a href="full-spread.html">
+      <img src="images/Full_Spread.png" alt="Vibraphone Full Spread" class="vibe-photo" />
+    </a>
   </main>
 
 </body>
