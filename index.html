@@ -1,88 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Metals - Leaderboard</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      text-align: center;
-      padding: 2rem;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    button {
-      margin-top: 1rem;
-      padding: 10px 20px;
-      font-size: 1.1rem;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    table {
-      margin: 2rem auto;
-      border-collapse: collapse;
-      width: 90%;
-      max-width: 600px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 12px;
-    }
-    th {
-      background-color: #4caf50;
-      color: white;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Woodstock Vibraphone Section</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>The Metals Leaderboard</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Player</th>
-        <th>Score</th>
-      </tr>
-    </thead>
-    <tbody id="leaderboard"></tbody>
-  </table>
-  <button onclick="location.href='flappy_bird.html'">Play Flappy Bird</button>
 
-  <!-- Firebase Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDbh5nIdl9HaTEXOtuE-AvbTXinVnuFcJE",
-      authDomain: "the-metals.firebaseapp.com",
-      projectId: "the-metals",
-      storageBucket: "the-metals.firebasestorage.app",
-      messagingSenderId: "736769841396",
-      appId: "1:736769841396:web:83471463b8a96ca507a6a1",
-      measurementId: "G-N4FZZLJCYX"
-    };
+<!-- HERO -->
+<section class="hero">
+  <div class="overlay">
+    <h1>Woodstock Vibraphone Section</h1>
+    <h2>Current Show</h2>
+    <h3 class="show-title">When One Blooms</h3>
+  </div>
+</section>
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+<!-- PAST SECTIONS BUTTON -->
+<section class="past-section">
+  <a href="past.html" class="btn">View Past Sections</a>
+</section>
 
-    async function loadLeaderboard() {
-      const snapshot = await db.collection("leaderboard").orderBy("score", "desc").limit(10).get();
-      const tbody = document.getElementById("leaderboard");
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${data.name}</td><td>${data.score}</td>`;
-        tbody.appendChild(row);
-      });
-    }
+<!-- CURRENT MEMBERS -->
+<section class="members">
+  <h2>Current Members</h2>
 
-    loadLeaderboard();
-  </script>
+  <div class="member-grid">
+
+    <div class="card">
+      <img src="images/member1.jpg">
+      <h3>Name One</h3>
+      <p>Senior</p>
+    </div>
+
+    <div class="card">
+      <img src="images/member2.jpg">
+      <h3>Name Two</h3>
+      <p>Junior</p>
+    </div>
+
+    <div class="card">
+      <img src="images/member3.jpg">
+      <h3>Name Three</h3>
+      <p>Sophomore</p>
+    </div>
+
+  </div>
+</section>
+
 </body>
 </html>
