@@ -129,3 +129,21 @@ body > *:not(.petals) {
   position: relative;
   z-index: 1;
 }
+
+.past-list {
+  max-width: 700px;
+  margin: auto;
+}
+
+.year {
+  margin: 30px 0;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  transition: 0.3s;
+}
+
+.year:hover {
+  box-shadow: 0 0 15px pink;
+  transform: scale(1.02);
+}
