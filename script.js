@@ -1,5 +1,8 @@
 const petalsContainer = document.querySelector(".petals");
 
+const isMobile = window.innerWidth < 600;
+const spawnRate = isMobile ? 200 : 120; // fewer petals on mobile
+
 function createPetal() {
   const petal = document.createElement("div");
   petal.classList.add("petal");
@@ -9,10 +12,10 @@ function createPetal() {
 
   petal.style.left = Math.random() * 100 + "vw";
 
-  const duration = Math.random() * 5 + 5;
+  const duration = Math.random() * 6 + 5;
   petal.style.animationDuration = duration + "s";
 
-  petal.style.fontSize = Math.random() * 15 + 15 + "px";
+  petal.style.fontSize = Math.random() * 16 + 12 + "px";
 
   petalsContainer.appendChild(petal);
 
@@ -21,4 +24,9 @@ function createPetal() {
   }, duration * 1000);
 }
 
-setInterval(createPetal, 120);
+// initial burst
+for (let i = 0; i < (isMobile ? 10 : 25); i++) {
+  createPetal();
+}
+
+setInterval(createPetal, spawnRate);
