@@ -53,40 +53,78 @@ h1 {
 
 /* MEMBERS */
 .members {
-  padding: 50px 20px;
+  padding: 60px 20px;
 }
 
-.member-grid {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
+.member-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  columns: 2;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.card {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 20px;
-  width: 200px;
+.member-list li {
+  font-size: 1.5em;
+  margin: 15px 0;
+  padding: 10px;
+  border-radius: 10px;
   transition: 0.3s;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
 }
 
-.card img {
-  width: 100%;
-  border-radius: 15px;
+.member-list li:nth-child(1) { animation-delay: 0.2s; }
+.member-list li:nth-child(2) { animation-delay: 0.4s; }
+.member-list li:nth-child(3) { animation-delay: 0.6s; }
+.member-list li:nth-child(4) { animation-delay: 0.8s; }
+.member-list li:nth-child(5) { animation-delay: 1s; }
+
+.member-list li:hover {
+  background: rgba(255, 182, 193, 0.1);
+  box-shadow: 0 0 10px pink;
+  transform: scale(1.05);
 }
 
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 0 20px #ffb6c1;
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
-body::before {
-  content: "🌸 🌼 🌷 🌺";
+/* PETALS */
+.petals {
   position: fixed;
-  top: 10px;
+  top: 0;
+  left: 0;
   width: 100%;
-  text-align: center;
-  opacity: 0.2;
-  font-size: 2em;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.petal {
+  position: absolute;
+  top: -10px;
+  font-size: 20px;
+  animation: fall linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10px) translateX(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) translateX(50px) rotate(360deg);
+  }
+}
+
+/* KEEP CONTENT ABOVE PETALS */
+body > *:not(.petals) {
+  position: relative;
+  z-index: 1;
 }
