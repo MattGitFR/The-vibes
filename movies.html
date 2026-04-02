@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Movie Search Player</title>
+  <title>Movies</title>
 
   <style>
     body {
@@ -10,6 +10,10 @@
       font-family: Arial;
       margin: 0;
       text-align: center;
+    }
+
+    h2 {
+      margin-top: 15px;
     }
 
     input {
@@ -52,7 +56,11 @@
       background: #00c3ff;
       font-weight: bold;
       cursor: pointer;
-      margin-bottom: 10px;
+      margin: 8px;
+    }
+
+    #backBtn {
+      display: none;
     }
   </style>
 </head>
@@ -60,10 +68,13 @@
 
 <h2>Search Movies / Shows</h2>
 
-<input id="search" placeholder="Search..." oninput="searchMovies()">
+<!-- SEARCH UI -->
+<div id="searchUI">
+  <input id="search" placeholder="Search..." oninput="searchMovies()">
+  <div id="results"></div>
+</div>
 
-<div id="results"></div>
-
+<!-- TV CONTROLS -->
 <div id="tvControls">
   <input id="season" placeholder="Season">
   <input id="episode" placeholder="Episode">
@@ -71,6 +82,10 @@
   <button onclick="loadTV()">Watch Episode</button>
 </div>
 
+<!-- BACK BUTTON -->
+<button id="backBtn" onclick="goBack()">⬅ Back</button>
+
+<!-- PLAYER -->
 <iframe id="player"></iframe>
 
 <script>
@@ -78,7 +93,7 @@ const API_KEY = "f55fdbf2b87a76b03335ea885b35ab96";
 
 let currentItem = null;
 
-// SEARCH FUNCTION
+// SEARCH
 async function searchMovies() {
   let query = document.getElementById("search").value;
 
@@ -116,9 +131,13 @@ async function searchMovies() {
 function selectItem(item) {
   currentItem = item;
 
+  // Hide search UI
+  document.getElementById("searchUI").style.display = "none";
+  document.getElementById("backBtn").style.display = "inline-block";
+
   if (item.type === "movie") {
     document.getElementById("tvControls").style.display = "none";
-    loadMovie();
+    loadMovie(); // auto play
   } else {
     document.getElementById("tvControls").style.display = "block";
   }
@@ -130,7 +149,7 @@ function loadMovie() {
   document.getElementById("player").src = url;
 }
 
-// LOAD TV SHOW
+// LOAD TV
 function loadTV() {
   let season = document.getElementById("season").value;
   let episode = document.getElementById("episode").value;
@@ -142,6 +161,14 @@ function loadTV() {
 
   let url = `https://vidking.net/embed/tv/${currentItem.id}/${season}/${episode}`;
   document.getElementById("player").src = url;
+}
+
+// BACK BUTTON
+function goBack() {
+  document.getElementById("searchUI").style.display = "block";
+  document.getElementById("tvControls").style.display = "none";
+  document.getElementById("backBtn").style.display = "none";
+  document.getElementById("player").src = "";
 }
 </script>
 
