@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Search Player</title>
+
+  <style>
+    body {
+      background: #0f0f0f;
+      color: white;
+      font-family: Arial;
+      margin: 0;
+      text-align: center;
+    }
+
+    input {
+      width: 85%;
+      padding: 14px;
+      margin: 10px;
+      border-radius: 12px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .result {
+      background: #1f1f1f;
+      margin: 6px 15px;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .result:hover {
+      background: #2a2a2a;
+    }
+
+    iframe {
+      width: 100%;
+      height: 65vh;
+      border: none;
+      margin-top: 10px;
+    }
+
+    #tvControls {
+      display: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      background: #00c3ff;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Search Movies / Shows</h2>
+
+<input id="search" placeholder="Search..." oninput="searchMovies()">
+
+<div id="results"></div>
+
+<div id="tvControls">
+  <input id="season" placeholder="Season">
+  <input id="episode" placeholder="Episode">
+  <br>
+  <button onclick="loadTV()">Watch Episode</button>
+</div>
+
+<iframe id="player"></iframe>
+
+<script>
+const API_KEY = "f55fdbf2b87a76b03335ea885b35ab96";
+
+let currentItem = null;
+
+// SEARCH FUNCTION
+async function searchMovies() {
+  let query = document.getElementById("search").value;
+
+  if (query.length < 2) return;
+
+  let res = await fetch(
+    `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`
+  );
+  let data = await res.json();
+
+  let resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "";
+
+  data.results.forEach(item => {
+    let title = item.title || item.name;
+    let type = item.media_type;
+
+    if (!title || (type !== "movie" && type !== "tv")) return;
+
+    let div = document.createElement("div");
+    div.className = "result";
+    div.innerText = title;
+
+    div.onclick = () => selectItem({
+      title: title,
+      type: type,
+      id: item.id
+    });
+
+    resultsDiv.appendChild(div);
+  });
+}
+
+// SELECT ITEM
+function selectItem(item) {
+  currentItem = item;
+
+  if (item.type === "movie") {
+    document.getElementById("tvControls").style.display = "none";
+    loadMovie();
+  } else {
+    document.getElementById("tvControls").style.display = "block";
+  }
+}
+
+// LOAD MOVIE
+function loadMovie() {
+  let url = `https://vidking.net/embed/movie/${currentItem.id}`;
+  document.getElementById("player").src = url;
+}
+
+// LOAD TV SHOW
+function loadTV() {
+  let season = document.getElementById("season").value;
+  let episode = document.getElementById("episode").value;
+
+  if (!season || !episode) {
+    alert("Enter season and episode");
+    return;
+  }
+
+  let url = `https://vidking.net/embed/tv/${currentItem.id}/${season}/${episode}`;
+  document.getElementById("player").src = url;
+}
+</script>
+
+</body>
+</html>
